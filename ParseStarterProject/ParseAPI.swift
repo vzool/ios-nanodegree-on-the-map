@@ -41,28 +41,7 @@ class ParseAPI{
             
             if let results = json["results"] as? NSArray{
                 
-                var final_result:[StudentLocation] = Array(count: results.count, repeatedValue: StudentLocation())
-                
-                for(var i = 0; i < results.count; i++){
-                    
-                    final_result[i].uniqueKey = results[i]["uniqueKey"] as? String
-                    final_result[i].firstName = results[i]["firstName"] as? String
-                    final_result[i].lastName = results[i]["lastName"] as? String
-                    final_result[i].mapString = results[i]["mapString"] as? String
-                    final_result[i].mediaURL = results[i]["mediaURL"] as? String
-                    
-                    if let lat = results[i]["latitude"] as? Double{
-                        final_result[i].latitude = lat
-                    }
-                    
-                    if let lon = results[i]["longitude"] as? Double{
-                        final_result[i].longitude = lon
-                    }
-                }
-                
-                dispatch_async(dispatch_get_main_queue()) {
-                    AppDelegate.studentLocations = final_result
-                }
+                AppDelegate.StudentLocations = StudentInformation(dict: json)
                 
                 dispatch_async(dispatch_get_main_queue()) {
                     (view as? MapViewController)!.loadStudentLocations()
@@ -166,10 +145,10 @@ class ParseAPI{
         task.resume()
     }
     
-    static internal func UpdateStudentLocation(latitude:String, longitude:String,  _mediaURL:String,  view: UIViewController){
+    static internal func UpdateStudentLocation(latitude:String, longitude:String,  _mediaURL:String,  mapString:String, view: UIViewController){
         
         dispatch_async(dispatch_get_main_queue()) {
-            (view as? MapViewController)!.startNetworkPoint()
+            (view as? MapPinSelectorViewController)!.startNetworkPoint()
         }
         
         let urlString = "https://api.parse.com/1/classes/StudentLocation/\(ParseAPI.ObjectID)"
@@ -182,22 +161,12 @@ class ParseAPI{
         request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        let gps = split(UdacityAPI.Location) { $0 == ","}
-        
         var lat:String!
         var lon:String!
         var mediaUrl:String!
         
-        if latitude.isEmpty || longitude.isEmpty{
-            
-            lat = gps[0]
-            lon = gps[1]
-            
-        }else{
-            
-            lat = latitude
-            lon = longitude
-        }
+        lat = latitude
+        lon = longitude
         
         if _mediaURL.isEmpty{
             mediaUrl = ParseAPI.MediaURL
@@ -205,7 +174,7 @@ class ParseAPI{
             mediaUrl = _mediaURL
         }
         
-        let json = "{\"uniqueKey\": \"\(UdacityAPI.AccountKey)\", \"firstName\": \"\(UdacityAPI.FirstName)\", \"lastName\": \"\(UdacityAPI.LastName)\",\"mapString\": \"Mountain View, CA\", \"mediaURL\": \"\(mediaUrl)\",\"latitude\": \(lat), \"longitude\": \(lon)}"
+        let json = "{\"uniqueKey\": \"\(UdacityAPI.AccountKey)\", \"firstName\": \"\(UdacityAPI.FirstName)\", \"lastName\": \"\(UdacityAPI.LastName)\",\"mapString\": \"\(mapString)\", \"mediaURL\": \"\(mediaUrl)\",\"latitude\": \(lat), \"longitude\": \(lon)}"
         
         request.HTTPBody = json.dataUsingEncoding(NSUTF8StringEncoding)
         
@@ -219,7 +188,7 @@ class ParseAPI{
                 println(error.description)
                 
                 dispatch_async(dispatch_get_main_queue()) {
-                    (view as? MapViewController)!.notifyUser(error.description)
+                    (view as? MapPinSelectorViewController)!.notifyUser(error.description)
                 }
                 
                 return
@@ -232,17 +201,14 @@ class ParseAPI{
             if let error = json["error"] as? String{
                 
                 dispatch_async(dispatch_get_main_queue()) {
-                    (view as? MapViewController)!.notifyUser(error)
+                    (view as? MapPinSelectorViewController)!.notifyUser(error)
                 }
                 
             }else{
                 
                 dispatch_async(dispatch_get_main_queue()) {
-                    (view as? MapViewController)!.notifySaved()
+                    (view as? MapPinSelectorViewController)!.notifySaved()
                 }
-                
-                ParseAPI.GetStudentLocations(view)
-                
             }
             
             println(NSString(data: data, encoding: NSUTF8StringEncoding))

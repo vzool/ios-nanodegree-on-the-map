@@ -8,35 +8,71 @@
 
 import UIKit
 import MapKit
-import CoreLocation
 
-class MapViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegate, CLLocationManagerDelegate {
+class MapViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegate {
 
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var indicator: UIActivityIndicatorView!
     
-    var mapStringView:UITextField!
-    
-    var locationManager: CLLocationManager!
+    var signOutButtonView:UIButton!
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
         
-        mapStringView = UITextField(frame: CGRectMake(0, 0, navigationController!.navigationBar.frame.size.width, 21.0))
-        mapStringView.textAlignment = NSTextAlignment.Center
-        mapStringView.placeholder = "Look for place..."
-        mapStringView.delegate = self
+        signOutButtonView = UIButton(frame: CGRectMake(0, 0, navigationController!.navigationBar.frame.size.width, 21.0))
+        signOutButtonView.setTitle("Sign Out", forState: UIControlState.Normal)
+        signOutButtonView.addTarget(self, action: "signOut", forControlEvents: UIControlEvents.TouchUpInside)
+        signOutButtonView.setTitleColor(UIColor.blueColor(), forState: .Normal)
+        signOutButtonView.setTitleColor(UIColor.grayColor(), forState: UIControlState.Disabled)
         
-        navigationItem.titleView = mapStringView
+        navigationItem.titleView = signOutButtonView
         
-//        mapStringView.becomeFirstResponder()
-
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Action, target: self, action: "SaveAction")
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "pin"), style: UIBarButtonItemStyle.Plain, target: self, action: "SaveAction")
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Refresh, target: self, action: "RefreshAction")
         showIndicator(true)
         
         ParseAPI.GetStudentLocations(self)
+    }
+    
+    func signOut(){
+        println("signOut")
+        
+        var alert = UIAlertController(title: "Warning", message: "You about to Sign Out, are you sure?", preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: { action in
+            switch action.style{
+                
+            case .Default:
+                println("default")
+                
+            case .Cancel:
+                println("cancel")
+                
+            case .Destructive:
+                println("destructive")
+                
+            }
+        }))
+        
+        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { action in
+            switch action.style{
+            case .Default:
+                UdacityAPI.Logout(self)
+                println("default : ok")
+                
+            case .Cancel:
+                println("cancel")
+                
+            case .Destructive:
+                println("destructive")
+            }
+        }))
+        
+        presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    func LogoutSuccessNetworkPoint(){
+        performSegueWithIdentifier("show_login", sender: self)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -80,7 +116,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegat
     func loadStudentLocations(){
         // The "locations" array is an array of dictionary objects that are similar to the JSON
         // data that you can download from parse.
-        let locations =  AppDelegate.studentLocations
+        let locations =  AppDelegate.StudentLocations
         
         // We will create an MKPointAnnotation for each dictionary in "locations". The
         // point annotations will be stored in this array, and then provided to the map view.
@@ -90,12 +126,12 @@ class MapViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegat
         // to create map annotations. This would be more stylish if the dictionaries were being
         // used to create custom structs. Perhaps StudentLocation structs.
         
-        for(var i = 0; i < locations.count; i++){
+        for(var i = 0; i < locations.data.count; i++){
             
             // Notice that the float values are being used to create CLLocationDegree values.
             // This is a version of the Double type.
             
-            let data = locations[i]
+            let data = locations.data[i]
             
             let lat = CLLocationDegrees(data.latitude)
             let long = CLLocationDegrees(data.longitude)
@@ -117,22 +153,11 @@ class MapViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegat
         mapView.addAnnotations(annotations)
     }
     
-    func updateMyLocationToCurrent(){
-        if (CLLocationManager.locationServicesEnabled())
-        {
-            locationManager = CLLocationManager()
-            locationManager.delegate = self
-            locationManager.desiredAccuracy = kCLLocationAccuracyBest
-            locationManager.requestAlwaysAuthorization()
-            locationManager.startUpdatingLocation()
-        }
-    }
-    
     func showIndicator(state:Bool){
         
         navigationItem.leftBarButtonItem?.enabled = !state
         navigationItem.rightBarButtonItem?.enabled = !state
-        mapStringView.enabled = !state
+        signOutButtonView.enabled = !state
         indicator.hidden = !state
         
         if state{
@@ -159,58 +184,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegat
         ParseAPI.GetStudentLocations(self)
     }
     
-    func updateLocation(){
-        if (CLLocationManager.locationServicesEnabled())
-        {
-            locationManager = CLLocationManager()
-            locationManager.delegate = self
-            locationManager.desiredAccuracy = kCLLocationAccuracyBest
-            locationManager.requestAlwaysAuthorization()
-            locationManager.startUpdatingLocation()
-        }
-        
-        updateStudentData()
-    }
-    
     func updateStudentData(){
         
-        var alertController:UIAlertController?
-        alertController = UIAlertController(title: "Update Media URL",
-            message: "Enter some URL",
-            preferredStyle: .Alert)
-        
-        alertController!.addTextFieldWithConfigurationHandler(
-            {(textField: UITextField!) in
-                textField.placeholder = "Enter yout URL"
-                
-                if ParseAPI.MediaURL.isEmpty{
-                    textField.text = "http://"
-                }else{
-                    textField.text = ParseAPI.MediaURL
-                }
-                
-        })
-        
-        let action = UIAlertAction(title: "Submit",
-            style: UIAlertActionStyle.Default,
-            handler: {[weak self]
-                (paramAction:UIAlertAction!) in
-                if let textFields = alertController?.textFields{
-                    let theTextFields = textFields as! [UITextField]
-                    let enteredText = theTextFields[0].text
-                    
-                    if ParseAPI.MediaURL != enteredText{
-                        ParseAPI.UpdateStudentLocation("", longitude: "", _mediaURL: enteredText, view: self!)
-                    }
-                    
-                    println(enteredText)
-                }
-            })
-        
-        alertController?.addAction(action)
-        self.presentViewController(alertController!,
-            animated: true,
-            completion: nil)
+        performSegueWithIdentifier("select_pin_on_map", sender: self)
     }
     
     func youAlreadyExists(){
@@ -238,7 +214,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegat
             switch action.style{
             case .Default:
                 self.showIndicator(false)
-                self.updateLocation()
+                self.updateStudentData()
                 println("default : ok")
                 
             case .Cancel:
@@ -263,20 +239,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegat
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
-    }
-    
-    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
-        
-        let location = locations.last as! CLLocation
-        
-        println("LocationManager: latitude " + "\(location.coordinate.latitude)" + " longitude \(location.coordinate.longitude)")
-        
-        ParseAPI.UpdateStudentLocation("\(location.coordinate.latitude)", longitude: "\(location.coordinate.longitude)", _mediaURL: "", view: self)
-        
-        let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
-        let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
-        
-        self.mapView.setRegion(region, animated: true)
     }
     
     func notifyUser(msg:String){
@@ -315,6 +277,5 @@ class MapViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegat
         }))
         presentViewController(alert, animated: true, completion: nil)
     }
-    
 }
 

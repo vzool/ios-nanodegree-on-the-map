@@ -35,8 +35,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         showIndicator(true)
         
         messageLabel.text = ""
-        userNameText.text = "aeemh.sdn@gmail.com"
-        passwordText.text = "z00l@uDaCity"
         
         if count(userNameText.text) <= 0 {
             messageLabel.text = "Email Address is required"

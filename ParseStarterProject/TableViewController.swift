@@ -23,14 +23,14 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return AppDelegate.studentLocations.count
+        return AppDelegate.StudentLocations.data.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCellWithIdentifier("CELL") as! UITableViewCell
         
-        let data = AppDelegate.studentLocations[indexPath.row]
+        let data = AppDelegate.StudentLocations.data[indexPath.row]
         
         let first = data.firstName
         let last = data.lastName
@@ -38,13 +38,14 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         cell.textLabel?.text = "\(first) \(last)"
         cell.detailTextLabel?.text = "\(mediaURL)"
+        cell.imageView?.image = UIImage(named: "pin")
         
         return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        let data = AppDelegate.studentLocations[indexPath.row]
+        let data = AppDelegate.StudentLocations.data[indexPath.row]
         
         let app = UIApplication.sharedApplication()
         app.openURL(NSURL(string: data.mediaURL)!)

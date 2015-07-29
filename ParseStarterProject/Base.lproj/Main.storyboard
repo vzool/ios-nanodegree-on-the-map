@@ -31,14 +31,11 @@
                             </textField>
                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Image" translatesAutoresizingMaskIntoConstraints="NO" id="XHg-oN-tgE">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                <variation key="widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="79" y="127" width="252" height="179"/>
-                                </variation>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VUI-EO-30g">
                                 <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xNN-iM-OfO">
@@ -57,7 +54,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="On The Map" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4be-C3-E0u">
                                 <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="40"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -98,25 +95,25 @@
                             <mask key="constraints">
                                 <exclude reference="2Ym-zt-gSL"/>
                                 <exclude reference="Zia-cY-EGI"/>
-                                <exclude reference="7Uh-mn-sHM"/>
-                                <exclude reference="7Wg-dG-zzm"/>
-                                <exclude reference="81Y-ck-3Bi"/>
-                                <exclude reference="fUP-Rf-UMn"/>
-                                <exclude reference="WUu-4J-jl6"/>
-                                <exclude reference="cjv-ww-1G8"/>
                                 <exclude reference="BBO-UN-GP4"/>
                                 <exclude reference="oqW-zL-nl1"/>
-                                <exclude reference="PD5-wx-cCK"/>
+                                <exclude reference="WUu-4J-jl6"/>
+                                <exclude reference="cjv-ww-1G8"/>
                                 <exclude reference="CsP-7N-xJx"/>
                                 <exclude reference="VO1-h7-mcD"/>
                                 <exclude reference="avT-Pa-m8j"/>
-                                <exclude reference="0Da-a8-TzT"/>
-                                <exclude reference="sh9-pD-TDn"/>
                                 <exclude reference="CdB-Sm-wNZ"/>
                                 <exclude reference="HqB-Rn-dep"/>
                                 <exclude reference="MQg-1L-tXO"/>
                                 <exclude reference="k21-fp-ydJ"/>
                                 <exclude reference="kRf-AD-gFi"/>
+                                <exclude reference="0Da-a8-TzT"/>
+                                <exclude reference="sh9-pD-TDn"/>
+                                <exclude reference="PD5-wx-cCK"/>
+                                <exclude reference="7Uh-mn-sHM"/>
+                                <exclude reference="7Wg-dG-zzm"/>
+                                <exclude reference="81Y-ck-3Bi"/>
+                                <exclude reference="fUP-Rf-UMn"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -132,25 +129,25 @@
                             <mask key="constraints">
                                 <include reference="2Ym-zt-gSL"/>
                                 <include reference="Zia-cY-EGI"/>
-                                <include reference="7Uh-mn-sHM"/>
-                                <include reference="7Wg-dG-zzm"/>
-                                <include reference="81Y-ck-3Bi"/>
-                                <include reference="fUP-Rf-UMn"/>
-                                <include reference="WUu-4J-jl6"/>
-                                <include reference="cjv-ww-1G8"/>
                                 <include reference="BBO-UN-GP4"/>
                                 <include reference="oqW-zL-nl1"/>
-                                <include reference="PD5-wx-cCK"/>
+                                <include reference="WUu-4J-jl6"/>
+                                <include reference="cjv-ww-1G8"/>
                                 <include reference="CsP-7N-xJx"/>
                                 <include reference="VO1-h7-mcD"/>
                                 <include reference="avT-Pa-m8j"/>
-                                <include reference="0Da-a8-TzT"/>
-                                <include reference="sh9-pD-TDn"/>
                                 <include reference="CdB-Sm-wNZ"/>
                                 <include reference="HqB-Rn-dep"/>
                                 <include reference="MQg-1L-tXO"/>
                                 <include reference="k21-fp-ydJ"/>
                                 <include reference="kRf-AD-gFi"/>
+                                <include reference="0Da-a8-TzT"/>
+                                <include reference="sh9-pD-TDn"/>
+                                <include reference="PD5-wx-cCK"/>
+                                <include reference="7Uh-mn-sHM"/>
+                                <include reference="7Wg-dG-zzm"/>
+                                <include reference="81Y-ck-3Bi"/>
+                                <include reference="fUP-Rf-UMn"/>
                             </mask>
                         </variation>
                     </view>
@@ -177,6 +174,7 @@
                         <viewControllerLayoutGuide type="bottom" id="vpR-vt-gXQ"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="C6S-P7-sZO">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="53" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Dwl-rY-2jw">
@@ -191,7 +189,7 @@
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="LUG-tJ-O0M">
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                     <variation key="widthClass=compact">
                                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -200,7 +198,7 @@
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Imn-sJ-XBm">
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                     <variation key="widthClass=compact">
                                                         <fontDescription key="fontDescription" type="system" pointSize="11"/>
@@ -255,6 +253,45 @@
             </objects>
             <point key="canvasLocation" x="4191" y="930"/>
         </scene>
+        <!--Map Pin Selector View Controller-->
+        <scene sceneID="xcz-sD-ZB9">
+            <objects>
+                <viewController id="zp7-m6-mjf" customClass="MapPinSelectorViewController" customModule="On_The_Map" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="VCK-in-9T9"/>
+                        <viewControllerLayoutGuide type="bottom" id="tXn-6H-p6G"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="kf5-lp-qer">
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="5sy-dW-UfJ">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="0.0" y="28" width="400" height="600"/>
+                                </variation>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="5sy-dW-UfJ"/>
+                            </mask>
+                        </variation>
+                        <variation key="widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="5sy-dW-UfJ"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <navigationItem key="navigationItem" id="2Gz-a0-9JQ"/>
+                    <connections>
+                        <outlet property="mapView" destination="5sy-dW-UfJ" id="SPs-nz-6V0"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fXe-A6-bem" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5998.5" y="232"/>
+        </scene>
         <!--Map View Controller-->
         <scene sceneID="mjz-hN-gC1">
             <objects>
@@ -292,12 +329,12 @@
                                 <exclude reference="Rn6-Hc-cSk"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="9Nj-H3-UMF"/>
+                                <exclude reference="d9f-KB-K2i"/>
+                                <exclude reference="WdR-SG-1ki"/>
                                 <exclude reference="FkB-VJ-9Xh"/>
                                 <exclude reference="gbu-b0-hux"/>
                                 <exclude reference="qHC-ho-pE4"/>
-                                <exclude reference="WdR-SG-1ki"/>
-                                <exclude reference="9Nj-H3-UMF"/>
-                                <exclude reference="d9f-KB-K2i"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -306,12 +343,12 @@
                                 <include reference="Rn6-Hc-cSk"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="9Nj-H3-UMF"/>
+                                <include reference="d9f-KB-K2i"/>
+                                <include reference="WdR-SG-1ki"/>
                                 <include reference="FkB-VJ-9Xh"/>
                                 <include reference="gbu-b0-hux"/>
                                 <include reference="qHC-ho-pE4"/>
-                                <include reference="WdR-SG-1ki"/>
-                                <include reference="9Nj-H3-UMF"/>
-                                <include reference="d9f-KB-K2i"/>
                             </mask>
                         </variation>
                     </view>
@@ -319,6 +356,8 @@
                     <connections>
                         <outlet property="indicator" destination="Rn6-Hc-cSk" id="GYx-eI-eM4"/>
                         <outlet property="mapView" destination="2KU-nW-rRE" id="215-CH-9fk"/>
+                        <segue destination="BYZ-38-t0r" kind="presentation" identifier="show_login" id="t0K-u4-twa"/>
+                        <segue destination="w1v-yG-lN2" kind="presentation" identifier="select_pin_on_map" id="Qtd-FU-5mN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xaq-sD-oHp" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -360,7 +399,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2Ic-nd-U6Y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2136" y="418"/>
+            <point key="canvasLocation" x="2221.5" y="418"/>
         </scene>
         <!--Map-->
         <scene sceneID="2aX-BO-p4z">
@@ -400,10 +439,31 @@
             </objects>
             <point key="canvasLocation" x="3273" y="930"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="uJh-BC-nE1">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="w1v-yG-lN2" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="fWe-IH-Plw">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="zp7-m6-mjf" kind="relationship" relationship="rootViewController" id="PoP-VG-Ztm"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QS2-sL-Xoc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5101.5" y="232"/>
+        </scene>
     </scenes>
     <resources>
         <image name="Image" width="170" height="170"/>
         <image name="list" width="32" height="17"/>
         <image name="map" width="32" height="32"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="t0K-u4-twa"/>
+    </inferredMetricsTieBreakers>
 </document>

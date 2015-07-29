@@ -26,6 +26,8 @@
 		8F31C4551B63C220004B514E /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F31C4541B63C220004B514E /* TableViewController.swift */; };
 		8F31C4571B63D281004B514E /* StudentLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F31C4561B63D281004B514E /* StudentLocation.swift */; };
 		8F31C45A1B63EEBD004B514E /* StudentInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F31C4591B63EEBD004B514E /* StudentInformation.swift */; };
+		8FFA7AD71B68104000DF5401 /* MapPinSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFA7AD61B68104000DF5401 /* MapPinSelectorViewController.swift */; };
+		8FFA7AD91B6816C100DF5401 /* MyAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFA7AD81B6816C100DF5401 /* MyAnnotation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,6 +53,8 @@
 		8F31C4541B63C220004B514E /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		8F31C4561B63D281004B514E /* StudentLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentLocation.swift; sourceTree = "<group>"; };
 		8F31C4591B63EEBD004B514E /* StudentInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentInformation.swift; sourceTree = "<group>"; };
+		8FFA7AD61B68104000DF5401 /* MapPinSelectorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapPinSelectorViewController.swift; sourceTree = "<group>"; };
+		8FFA7AD81B6816C100DF5401 /* MyAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyAnnotation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,6 +146,7 @@
 			children = (
 				8F31C4561B63D281004B514E /* StudentLocation.swift */,
 				8F31C4591B63EEBD004B514E /* StudentInformation.swift */,
+				8FFA7AD81B6816C100DF5401 /* MyAnnotation.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -161,6 +166,7 @@
 				81BA814C1A49DA1800E65899 /* LoginViewController.swift */,
 				8F31C4541B63C220004B514E /* TableViewController.swift */,
 				8F31C44E1B62C155004B514E /* MapViewController.swift */,
+				8FFA7AD61B68104000DF5401 /* MapPinSelectorViewController.swift */,
 			);
 			name = ViewController;
 			sourceTree = "<group>";
@@ -252,7 +258,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8FFA7AD71B68104000DF5401 /* MapPinSelectorViewController.swift in Sources */,
 				8F31C45A1B63EEBD004B514E /* StudentInformation.swift in Sources */,
+				8FFA7AD91B6816C100DF5401 /* MyAnnotation.swift in Sources */,
 				8F31C4511B62C2C2004B514E /* ParseAPI.swift in Sources */,
 				8F31C4551B63C220004B514E /* TableViewController.swift in Sources */,
 				81BA814D1A49DA1800E65899 /* LoginViewController.swift in Sources */,

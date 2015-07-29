@@ -20,7 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     
-    static internal var studentLocations:[StudentLocation]!
+//    static internal var studentLocations:[StudentLocation]!
+    static internal var StudentLocations:StudentInformation!
 
     //--------------------------------------
     // MARK: - UIApplicationDelegate

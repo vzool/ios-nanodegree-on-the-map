@@ -121,7 +121,12 @@ class UdacityAPI{
         task.resume()
     }
     
-    static internal func Logout(){
+    static internal func Logout(view:UIViewController){
+        
+        dispatch_async(dispatch_get_main_queue()) {
+            (view as? MapViewController)!.startNetworkPoint()
+        }
+        
         let request = NSMutableURLRequest(URL: NSURL(string: "https://www.udacity.com/api/session")!)
         request.HTTPMethod = "DELETE"
         var xsrfCookie: NSHTTPCookie? = nil
@@ -135,10 +140,19 @@ class UdacityAPI{
         let session = NSURLSession.sharedSession()
         let task = session.dataTaskWithRequest(request) { data, response, error in
             if error != nil { // Handle error…
+                
+                dispatch_async(dispatch_get_main_queue()) {
+                    (view as? MapViewController)!.notifyUser(error.description)
+                }
+                
                 return
             }
             let newData = data.subdataWithRange(NSMakeRange(5, data.length - 5)) /* subset response data! */
             println(NSString(data: newData, encoding: NSUTF8StringEncoding))
+            
+            dispatch_async(dispatch_get_main_queue()) {
+                (view as? MapViewController)!.LogoutSuccessNetworkPoint()
+            }
         }
         task.resume()
     }
