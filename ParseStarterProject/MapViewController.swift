@@ -28,10 +28,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegat
         
         pinBarButton = UIBarButtonItem(image: UIImage(named: "pin"), style: UIBarButtonItemStyle.Plain, target: self, action: "SaveAction")
         
-        navigationItem.rightBarButtonItems = [
+        navigationItem.setRightBarButtonItems([
             refreshBarButton,
             pinBarButton
-        ]
+        ], animated: true)
         
         navigationItem.leftBarButtonItem = signOutBarButtonView
         

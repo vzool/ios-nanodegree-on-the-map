@@ -26,10 +26,10 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         pinBarButton = UIBarButtonItem(image: UIImage(named: "pin"), style: UIBarButtonItemStyle.Plain, target: self, action: "saveAction")
         
-        navigationItem.rightBarButtonItems = [
+        navigationItem.setRightBarButtonItems([
             refreshBarButton,
             pinBarButton
-        ]
+        ], animated: true)
         
         navigationItem.leftBarButtonItem = signOutBarButtonView
         
