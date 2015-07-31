@@ -14,21 +14,37 @@ class ParseAPI{
     static internal var ObjectID:String!
     static internal var MediaURL:String!
     
-    static internal func GetStudentLocations(view:UIViewController){
+    internal static let APPLICATION_ID = "QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr"
+    internal static let API_KEY = "QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY"
+    
+    static internal func GetStudentLocations(view:UIViewController, flag: ControlFlag){
         
         dispatch_async(dispatch_get_main_queue()) {
-            (view as? MapViewController)!.startNetworkPoint()
+            
+            if flag == ControlFlag.MapViewController{
+                (view as? MapViewController)!.startNetworkPoint()
+            }
+            
+            else if flag == ControlFlag.TableViewController{
+                (view as? TableViewController)!.startNetworkPoint()
+            }
         }
         
         let request = NSMutableURLRequest(URL: NSURL(string: "https://api.parse.com/1/classes/StudentLocation")!)
-        request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
-        request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
+        request.addValue(APPLICATION_ID, forHTTPHeaderField: "X-Parse-Application-Id")
+        request.addValue(API_KEY, forHTTPHeaderField: "X-Parse-REST-API-Key")
         let session = NSURLSession.sharedSession()
         let task = session.dataTaskWithRequest(request) { data, response, error in
             if error != nil { // Handle error...
                 
                 dispatch_async(dispatch_get_main_queue()) {
-                    (view as? MapViewController)!.notifyUser(error.description)
+                    if flag == ControlFlag.MapViewController{
+                        (view as? MapViewController)!.notifyUser(error.description)
+                    }
+                        
+                    else if flag == ControlFlag.TableViewController{
+                        (view as? TableViewController)!.notifyUser(error.description)
+                    }
                 }
                 
                 return
@@ -44,12 +60,28 @@ class ParseAPI{
                 AppDelegate.StudentLocations = StudentInformation(dict: json)
                 
                 dispatch_async(dispatch_get_main_queue()) {
-                    (view as? MapViewController)!.loadStudentLocations()
+                    
+                    if flag == ControlFlag.MapViewController{
+                        (view as? MapViewController)!.loadStudentLocations()
+                    }
+                        
+                    else if flag == ControlFlag.TableViewController{
+                        (view as? TableViewController)!.loadStudentLocations()
+                    }
+                    
                 }
             }
             
             dispatch_async(dispatch_get_main_queue()) {
-                (view as? MapViewController)!.finishNetworkPoint()
+                
+                if flag == ControlFlag.MapViewController{
+                    (view as? MapViewController)!.finishNetworkPoint()
+                }
+                    
+                else if flag == ControlFlag.TableViewController{
+                    (view as? TableViewController)!.finishNetworkPoint()
+                }
+                
             }
         }
         task.resume()
@@ -64,8 +96,8 @@ class ParseAPI{
         let urlString = "https://api.parse.com/1/classes/StudentLocation?where=%7B%22uniqueKey%22%3A%22\(UdacityAPI.AccountKey)%22%7D"
         let url = NSURL(string: urlString)
         let request = NSMutableURLRequest(URL: url!)
-        request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
-        request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
+        request.addValue(APPLICATION_ID, forHTTPHeaderField: "X-Parse-Application-Id")
+        request.addValue(API_KEY, forHTTPHeaderField: "X-Parse-REST-API-Key")
         let session = NSURLSession.sharedSession()
         let task = session.dataTaskWithRequest(request) { data, response, error in
             if error != nil {
@@ -83,64 +115,59 @@ class ParseAPI{
             let json = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments, error: &parsingError) as! NSDictionary
             
             if let results = json["results"] as? NSArray{
-                
-                if results.count == 0 {
                     
-                    ParseAPI.SaveStudentLocation(view)
-                    
-                }else{
-                    
-                    if let result = results[0] as? NSDictionary{
-                        if let objectId = result["objectId"] as? String{
-                            ParseAPI.ObjectID = objectId
-                            println(objectId)
-                        }
-                        
-                        if let mediaURL = result["mediaURL"] as? String{
-                            ParseAPI.MediaURL = mediaURL
-                            println(mediaURL)
-                        }
-                        
+                if let result = results[0] as? NSDictionary{
+                    if let objectId = result["objectId"] as? String{
+                        ParseAPI.ObjectID = objectId
+                        println(objectId)
                     }
-                    
-                    dispatch_async(dispatch_get_main_queue()) {
-                        (view as? MapViewController)!.youAlreadyExists()
+                        
+                    if let mediaURL = result["mediaURL"] as? String{
+                        ParseAPI.MediaURL = mediaURL
+                        println(mediaURL)
                     }
                 }
-                
             }
-            
         }
         task.resume()
     }
     
-    static internal func SaveStudentLocation(view: UIViewController){
+    static internal func SaveStudentLocation(latitude:String, longitude:String,  _mediaURL:String,  mapString:String, view: UIViewController){
         
         let request = NSMutableURLRequest(URL: NSURL(string: "https://api.parse.com/1/classes/StudentLocation")!)
         request.HTTPMethod = "POST"
-        request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
-        request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
+        request.addValue(APPLICATION_ID, forHTTPHeaderField: "X-Parse-Application-Id")
+        request.addValue(API_KEY, forHTTPHeaderField: "X-Parse-REST-API-Key")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        let gps = split(UdacityAPI.Location) { $0 == ","}
-        
-        request.HTTPBody = "{\"uniqueKey\": \"\(UdacityAPI.AccountKey)\", \"firstName\": \"\(UdacityAPI.FirstName)\", \"lastName\": \"\(UdacityAPI.LastName)\",\"mapString\": \"Mountain View, CA\", \"mediaURL\": \"https://udacity.com\",\"latitude\": \(gps[0]), \"longitude\": \(gps[1])}".dataUsingEncoding(NSUTF8StringEncoding)
+        request.HTTPBody = "{\"uniqueKey\": \"\(UdacityAPI.AccountKey)\", \"firstName\": \"\(UdacityAPI.FirstName)\", \"lastName\": \"\(UdacityAPI.LastName)\",\"mapString\": \"\(mapString)\", \"mediaURL\": \"\(_mediaURL)\",\"latitude\": \(latitude), \"longitude\": \(longitude)}".dataUsingEncoding(NSUTF8StringEncoding)
         let session = NSURLSession.sharedSession()
         let task = session.dataTaskWithRequest(request) { data, response, error in
             if error != nil { // Handle error…
                 
                 dispatch_async(dispatch_get_main_queue()) {
-                    (view as? MapViewController)!.notifyUser(error.description)
+                    (view as? MapPinSelectorViewController)!.notifyUser(error.description)
                 }
                 
                 return
             }
             println(NSString(data: data, encoding: NSUTF8StringEncoding))
             
-            dispatch_async(dispatch_get_main_queue()) {
-                (view as? MapViewController)!.finishSaveStudentLocationNetworkPoint()
-            }
+            // Parse JSON
+            var parsingError: NSError? = nil
+            let json = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments, error: &parsingError) as! NSDictionary
             
+            if let error = json["error"] as? String{
+                
+                dispatch_async(dispatch_get_main_queue()) {
+                    (view as? MapPinSelectorViewController)!.notifyUser(error)
+                }
+                
+            }else{
+                dispatch_async(dispatch_get_main_queue()) {
+                    (view as? MapPinSelectorViewController)!.notifySaved()
+                }
+            }
         }
         task.resume()
     }
@@ -157,8 +184,8 @@ class ParseAPI{
         let request = NSMutableURLRequest(URL: url!)
         
         request.HTTPMethod = "PUT"
-        request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
-        request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
+        request.addValue(APPLICATION_ID, forHTTPHeaderField: "X-Parse-Application-Id")
+        request.addValue(API_KEY, forHTTPHeaderField: "X-Parse-REST-API-Key")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         
         var lat:String!

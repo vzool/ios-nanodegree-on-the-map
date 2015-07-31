@@ -247,6 +247,8 @@
                     <navigationItem key="navigationItem" id="R4i-B5-cb9"/>
                     <connections>
                         <outlet property="tableElementView" destination="Dwl-rY-2jw" id="GBm-cP-zar"/>
+                        <segue destination="BYZ-38-t0r" kind="presentation" identifier="show_login" id="lpb-1v-4Ue"/>
+                        <segue destination="w1v-yG-lN2" kind="presentation" identifier="select_pin_on_map" id="sTN-x9-6hR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nsM-Z5-0ry" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -262,6 +264,7 @@
                         <viewControllerLayoutGuide type="bottom" id="tXn-6H-p6G"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="kf5-lp-qer">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="5sy-dW-UfJ">
@@ -464,6 +467,7 @@
         <image name="map" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="t0K-u4-twa"/>
+        <segue reference="lpb-1v-4Ue"/>
+        <segue reference="sTN-x9-6hR"/>
     </inferredMetricsTieBreakers>
 </document>

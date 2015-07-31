@@ -22,7 +22,7 @@ class MapPinSelectorViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.Plain, target: self, action: "BackToMainMap")
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.Plain, target: self, action: "BackToMainMap")
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -59,8 +59,14 @@ class MapPinSelectorViewController: UIViewController {
                 println(enteredText)
             }
         })
+        
+        let actionCancel = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: {[weak self] (paramAction:UIAlertAction!) in
+            self!.dismissViewControllerAnimated(true, completion: nil)
+        })
                 
+        alertController?.addAction(actionCancel)
         alertController?.addAction(action)
+        
         presentViewController(alertController!, animated: true, completion: nil)
     }
     
@@ -79,8 +85,6 @@ class MapPinSelectorViewController: UIViewController {
         let search = MKLocalSearch(request: request)
         search.startWithCompletionHandler {
             (response: MKLocalSearchResponse!, error: NSError!) in
-            
-//            println("response.mapItems: \(response.mapItems.count)")
             
             for item in response.mapItems as! [MKMapItem] {
                 
@@ -145,14 +149,6 @@ class MapPinSelectorViewController: UIViewController {
             
             textField.placeholder = "http://someGreatSite.net/"
             
-            if count(ParseAPI.MediaURL) > 0 {
-                
-                textField.text = ParseAPI.MediaURL
-            }else{
-                
-                textField.text = "http://"
-            }
-            
         })
         
         let action = UIAlertAction(title: "Save", style: UIAlertActionStyle.Default, handler: {[weak self] (paramAction:UIAlertAction!) in
@@ -161,12 +157,17 @@ class MapPinSelectorViewController: UIViewController {
                 let theTextFields = textFields as! [UITextField]
                 let enteredText = theTextFields[0].text
                 
-                ParseAPI.UpdateStudentLocation("\(self!.latitude)", longitude: "\(self!.longitude)", _mediaURL: enteredText, mapString: self!.mapString, view: self!)
+                ParseAPI.SaveStudentLocation("\(self!.latitude)", longitude: "\(self!.longitude)", _mediaURL: enteredText, mapString: self!.mapString, view: self!)
                 
                 println(enteredText)
             }
         })
         
+        let actionCancel = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: {[weak self] (paramAction:UIAlertAction!) in
+            self!.dismissViewControllerAnimated(true, completion: nil)
+        })
+        
+        alertController?.addAction(actionCancel)
         alertController?.addAction(action)
         presentViewController(alertController!, animated: true, completion: nil)
     }
@@ -197,6 +198,7 @@ class MapPinSelectorViewController: UIViewController {
             switch action.style{
             case .Default:
                 println("default : ok")
+                self.dismissViewControllerAnimated(true, completion: nil)
                 
             case .Cancel:
                 println("cancel")
@@ -210,6 +212,10 @@ class MapPinSelectorViewController: UIViewController {
     
     func startNetworkPoint(){
         println("NewMAP: startNetworkPoint")
+    }
+    
+    func BackToMainMap(){
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
 }

@@ -28,6 +28,7 @@
 		8F31C45A1B63EEBD004B514E /* StudentInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F31C4591B63EEBD004B514E /* StudentInformation.swift */; };
 		8FFA7AD71B68104000DF5401 /* MapPinSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFA7AD61B68104000DF5401 /* MapPinSelectorViewController.swift */; };
 		8FFA7AD91B6816C100DF5401 /* MyAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFA7AD81B6816C100DF5401 /* MyAnnotation.swift */; };
+		8FFA7ADB1B6B5BA500DF5401 /* ViewControlFlag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFA7ADA1B6B5BA500DF5401 /* ViewControlFlag.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,6 +56,7 @@
 		8F31C4591B63EEBD004B514E /* StudentInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentInformation.swift; sourceTree = "<group>"; };
 		8FFA7AD61B68104000DF5401 /* MapPinSelectorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapPinSelectorViewController.swift; sourceTree = "<group>"; };
 		8FFA7AD81B6816C100DF5401 /* MyAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyAnnotation.swift; sourceTree = "<group>"; };
+		8FFA7ADA1B6B5BA500DF5401 /* ViewControlFlag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControlFlag.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,6 +149,7 @@
 				8F31C4561B63D281004B514E /* StudentLocation.swift */,
 				8F31C4591B63EEBD004B514E /* StudentInformation.swift */,
 				8FFA7AD81B6816C100DF5401 /* MyAnnotation.swift */,
+				8FFA7ADA1B6B5BA500DF5401 /* ViewControlFlag.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -265,6 +268,7 @@
 				8F31C4551B63C220004B514E /* TableViewController.swift in Sources */,
 				81BA814D1A49DA1800E65899 /* LoginViewController.swift in Sources */,
 				81BA814B1A49DA1800E65899 /* AppDelegate.swift in Sources */,
+				8FFA7ADB1B6B5BA500DF5401 /* ViewControlFlag.swift in Sources */,
 				8F31C44D1B628EC1004B514E /* UdacityAPI.swift in Sources */,
 				8F31C4571B63D281004B514E /* StudentLocation.swift in Sources */,
 				8F31C44F1B62C155004B514E /* MapViewController.swift in Sources */,

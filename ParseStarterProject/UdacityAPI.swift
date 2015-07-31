@@ -121,10 +121,16 @@ class UdacityAPI{
         task.resume()
     }
     
-    static internal func Logout(view:UIViewController){
+    static internal func Logout(view:UIViewController, flag: ControlFlag){
         
         dispatch_async(dispatch_get_main_queue()) {
-            (view as? MapViewController)!.startNetworkPoint()
+            if flag == .MapViewController{
+                (view as? MapViewController)!.startNetworkPoint()
+            }
+            
+            else if flag == .TableViewController{
+                (view as? TableViewController)!.startNetworkPoint()
+            }
         }
         
         let request = NSMutableURLRequest(URL: NSURL(string: "https://www.udacity.com/api/session")!)
@@ -142,7 +148,13 @@ class UdacityAPI{
             if error != nil { // Handle error…
                 
                 dispatch_async(dispatch_get_main_queue()) {
-                    (view as? MapViewController)!.notifyUser(error.description)
+                    if flag == .MapViewController{
+                        (view as? MapViewController)!.notifyUser(error.description)
+                    }
+                    
+                    else if flag == .TableViewController{
+                        (view as? TableViewController)!.notifyUser(error.description)
+                    }
                 }
                 
                 return
@@ -151,7 +163,13 @@ class UdacityAPI{
             println(NSString(data: newData, encoding: NSUTF8StringEncoding))
             
             dispatch_async(dispatch_get_main_queue()) {
-                (view as? MapViewController)!.LogoutSuccessNetworkPoint()
+                if flag == .MapViewController{
+                    (view as? MapViewController)!.LogoutSuccessNetworkPoint()
+                }
+                
+                else if flag == .TableViewController{
+                    (view as? TableViewController)!.LogoutSuccessNetworkPoint()
+                }
             }
         }
         task.resume()

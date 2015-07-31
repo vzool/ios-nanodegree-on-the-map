@@ -14,28 +14,41 @@ class MapViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegat
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var indicator: UIActivityIndicatorView!
     
-    var signOutButtonView:UIButton!
+    var signOutBarButtonView:UIBarButtonItem!
+    var pinBarButton:UIBarButtonItem!
+    var refreshBarButton:UIBarButtonItem!
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
         
-        signOutButtonView = UIButton(frame: CGRectMake(0, 0, navigationController!.navigationBar.frame.size.width, 21.0))
-        signOutButtonView.setTitle("Sign Out", forState: UIControlState.Normal)
-        signOutButtonView.addTarget(self, action: "signOut", forControlEvents: UIControlEvents.TouchUpInside)
-        signOutButtonView.setTitleColor(UIColor.blueColor(), forState: .Normal)
-        signOutButtonView.setTitleColor(UIColor.grayColor(), forState: UIControlState.Disabled)
+        signOutBarButtonView = UIBarButtonItem(title: "Sign Out", style: UIBarButtonItemStyle.Plain, target: self, action: "signOut")
         
-        navigationItem.titleView = signOutButtonView
+        refreshBarButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Refresh, target: self, action: "RefreshAction")
         
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "pin"), style: UIBarButtonItemStyle.Plain, target: self, action: "SaveAction")
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Refresh, target: self, action: "RefreshAction")
+        pinBarButton = UIBarButtonItem(image: UIImage(named: "pin"), style: UIBarButtonItemStyle.Plain, target: self, action: "SaveAction")
+        
+        navigationItem.rightBarButtonItems = [
+            refreshBarButton,
+            pinBarButton
+        ]
+        
+        navigationItem.leftBarButtonItem = signOutBarButtonView
+        
+        navigationItem.title = "On The Map"
+        
         showIndicator(true)
         
-        ParseAPI.GetStudentLocations(self)
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        mapView.removeAnnotations(mapView.annotations)
+        ParseAPI.GetStudentLocations(self, flag: ControlFlag.MapViewController)
     }
     
     func signOut(){
+        
         println("signOut")
         
         var alert = UIAlertController(title: "Warning", message: "You about to Sign Out, are you sure?", preferredStyle: UIAlertControllerStyle.Alert)
@@ -57,7 +70,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegat
         alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { action in
             switch action.style{
             case .Default:
-                UdacityAPI.Logout(self)
+                UdacityAPI.Logout(self, flag: ControlFlag.MapViewController)
                 println("default : ok")
                 
             case .Cancel:
@@ -91,12 +104,13 @@ class MapViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegat
         var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier(reuseId) as? MKPinAnnotationView
         
         if pinView == nil {
+            
             pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
             pinView!.canShowCallout = true
             pinView!.pinColor = .Red
             pinView!.rightCalloutAccessoryView = UIButton.buttonWithType(.DetailDisclosure) as! UIButton
-        }
-        else {
+        
+        }else {
             pinView!.annotation = annotation
         }
         
@@ -155,9 +169,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegat
     
     func showIndicator(state:Bool){
         
-        navigationItem.leftBarButtonItem?.enabled = !state
-        navigationItem.rightBarButtonItem?.enabled = !state
-        signOutButtonView.enabled = !state
+        pinBarButton.enabled = !state
+        refreshBarButton.enabled = !state
+        signOutBarButtonView.enabled = !state
         indicator.hidden = !state
         
         if state{
@@ -177,63 +191,18 @@ class MapViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegat
     
     func SaveAction(){
         
-        ParseAPI.QueryForStudentLocation(self)
-    }
-    
-    func finishSaveStudentLocationNetworkPoint(){
-        ParseAPI.GetStudentLocations(self)
-    }
-    
-    func updateStudentData(){
-        
         performSegueWithIdentifier("select_pin_on_map", sender: self)
     }
     
-    func youAlreadyExists(){
-        
-        println("You R already saved at StudentLocation")
-        
-        var alert = UIAlertController(title: "Alert", message: "You already registered, Do want to update your location with your current one?", preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: { action in
-            switch action.style{
-            
-            case .Default:
-                println("default")
-                
-            case .Cancel:
-                println("cancel")
-                self.showIndicator(false)
-                
-            case .Destructive:
-                println("destructive")
-                
-            }
-        }))
-        
-        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { action in
-            switch action.style{
-            case .Default:
-                self.showIndicator(false)
-                self.updateStudentData()
-                println("default : ok")
-                
-            case .Cancel:
-                println("cancel")
-                self.showIndicator(false)
-                
-            case .Destructive:
-                println("destructive")
-            }
-        }))
-        
-        presentViewController(alert, animated: true, completion: nil)
+    func finishSaveStudentLocationNetworkPoint(){
+        ParseAPI.GetStudentLocations(self, flag: ControlFlag.MapViewController)
     }
     
     func RefreshAction(){
         
         mapView.removeAnnotations(mapView.annotations)
         
-        ParseAPI.GetStudentLocations(self)
+        ParseAPI.GetStudentLocations(self, flag: ControlFlag.MapViewController)
     }
 
     func textFieldShouldReturn(textField: UITextField) -> Bool {
