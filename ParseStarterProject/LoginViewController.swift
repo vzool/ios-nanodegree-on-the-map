@@ -32,8 +32,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func loginAction(sender: AnyObject) {
         
-        showIndicator(true)
-        
         messageLabel.text = ""
         
         if count(userNameText.text) <= 0 {
@@ -45,6 +43,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             messageLabel.text = "Password is required"
             return
         }
+        
+        showIndicator(true)
         
         UdacityAPI.Login(userNameText.text, password: passwordText.text, view: self)
     }
